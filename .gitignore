@@ -1,4 +1,6 @@
 /target
 *.c
+*.bf
+*.ef
 tmp
 /.idea

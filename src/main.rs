@@ -48,8 +48,11 @@ fn main() {
     let c_compiler = cli.c;
     let tape_length = cli.l;
 
-    let eyefuck_code = std::fs::read_to_string(input_file).unwrap();
+    let mut eyefuck_code = std::fs::read_to_string(input_file).unwrap();
 
+    if eyefuck_code.ends_with("\n") {
+        eyefuck_code.pop();
+    }
     if eyefuck_code.len() % 3 != 0 {
         compile_error_print("", CompileErrorTypes::InvalidLength);
         std::process::exit(1);
@@ -98,7 +101,6 @@ fn main() {
             }
         }
     }
-
     let current_dir = std::env::current_dir().expect("Failed to get current path");
     let tmp_dir = current_dir.join("tmp");
     if !tmp_dir.exists() {

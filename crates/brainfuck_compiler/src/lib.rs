@@ -2,8 +2,8 @@ pub fn compile_c(brainfuck_code: String, tape_length: i32) -> String {
     let mut filted_code = String::new();
     for (i, c) in brainfuck_code.chars().enumerate() {
         match c {
-            '>' => filted_code.push('+'),
-            '<' => filted_code.push('-'),
+            '>' => filted_code.push('>'),
+            '<' => filted_code.push('<'),
             '+' => filted_code.push('+'),
             '-' => filted_code.push('-'),
             '.' => filted_code.push('.'),
@@ -34,9 +34,9 @@ pub fn compile_c(brainfuck_code: String, tape_length: i32) -> String {
             '+' => ccode.push_str("++*ptr;"),
             '-' => ccode.push_str("--*ptr;"),
             '.' => ccode.push_str("putchar(*ptr);"),
-            ',' => ccode.push_str("*ptr = getchar();"),
-            '[' => ccode.push_str("while (*ptr)"),
-            ']' => ccode.push_str(""),
+            ',' => ccode.push_str("*ptr=getchar();"),
+            '[' => ccode.push_str("while (*ptr){"),
+            ']' => ccode.push_str("}"),
             _ => {
                 eprintln!("Unexpected character {}:{}", i, c);
             }
@@ -44,8 +44,7 @@ pub fn compile_c(brainfuck_code: String, tape_length: i32) -> String {
     }
 
     ccode.push_str(
-        r#"
-        return 0;}
+        r#"return 0;}
     "#,
     );
 
